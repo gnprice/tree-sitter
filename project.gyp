@@ -97,6 +97,7 @@
         'src/runtime/parser.c',
         'src/runtime/string_input.c',
         'src/runtime/tree.c',
+        'src/runtime/tree_pool.c',
         'src/runtime/utf16.c',
         'externals/utf8proc/utf8proc.c',
       ],

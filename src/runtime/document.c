@@ -23,8 +23,8 @@ error:
 }
 
 void ts_document_free(TSDocument *self) {
+  if (self->tree) ts_tree_release(&self->parser.tree_pool, self->tree);
   parser_destroy(&self->parser);
-  if (self->tree) ts_tree_release(self->tree);
   ts_document_set_input(self, (TSInput){
     NULL,
     NULL,
@@ -44,7 +44,7 @@ void ts_document_set_language(TSDocument *self, const TSLanguage *language) {
   ts_document_invalidate(self);
   parser_set_language(&self->parser, language);
   if (self->tree) {
-    ts_tree_release(self->tree);
+    ts_tree_release(&self->parser.tree_pool, self->tree);
     self->tree = NULL;
   }
 }
@@ -146,7 +146,7 @@ void ts_document_parse_with_options(TSDocument *self, TSParseOptions options) {
       );
     }
 
-    ts_tree_release(old_tree);
+    ts_tree_release(&self->parser.tree_pool, old_tree);
   }
 
   self->tree = tree;

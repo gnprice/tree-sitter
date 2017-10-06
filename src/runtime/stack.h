@@ -7,6 +7,7 @@ extern "C" {
 
 #include "runtime/array.h"
 #include "runtime/tree.h"
+#include "runtime/tree_pool.h"
 #include "runtime/error_costs.h"
 #include <stdio.h>
 
@@ -48,7 +49,7 @@ typedef StackIterateAction (*StackIterateCallback)(void *, TSStateId state,
 /*
  *  Create a parse stack.
  */
-Stack *ts_stack_new();
+Stack *ts_stack_new(TreePool *);
 
 /*
  *  Release any resources reserved by a parse stack.

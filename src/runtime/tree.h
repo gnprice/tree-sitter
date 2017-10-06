@@ -11,6 +11,7 @@ extern "C" {
 #include "runtime/length.h"
 #include "runtime/array.h"
 #include <stdio.h>
+#include "runtime/tree_pool.h"
 
 extern TSStateId TS_TREE_STATE_NONE;
 
@@ -82,19 +83,19 @@ typedef Array(Tree *) TreeArray;
 typedef Array(TreePathEntry) TreePath;
 
 bool ts_tree_array_copy(TreeArray, TreeArray *);
-void ts_tree_array_delete(TreeArray *);
+void ts_tree_array_delete(TreePool *, TreeArray *);
 uint32_t ts_tree_array_essential_count(const TreeArray *);
 TreeArray ts_tree_array_remove_last_n(TreeArray *, uint32_t);
 TreeArray ts_tree_array_remove_trailing_extras(TreeArray *);
 void ts_tree_array_reverse(TreeArray *);
 
-Tree *ts_tree_make_leaf(TSSymbol, Length, Length, const TSLanguage *);
-Tree *ts_tree_make_node(TSSymbol, uint32_t, Tree **, unsigned, const TSLanguage *);
-Tree *ts_tree_make_copy(Tree *child);
-Tree *ts_tree_make_error_node(TreeArray *, const TSLanguage *);
-Tree *ts_tree_make_error(Length, Length, int32_t, const TSLanguage *);
+Tree *ts_tree_make_leaf(TreePool *, TSSymbol, Length, Length, const TSLanguage *);
+Tree *ts_tree_make_node(TreePool *, TSSymbol, uint32_t, Tree **, unsigned, const TSLanguage *);
+Tree *ts_tree_make_copy(TreePool *, Tree *child);
+Tree *ts_tree_make_error_node(TreePool *, TreeArray *, const TSLanguage *);
+Tree *ts_tree_make_error(TreePool *, Length, Length, int32_t, const TSLanguage *);
 void ts_tree_retain(Tree *tree);
-void ts_tree_release(Tree *tree);
+void ts_tree_release(TreePool *, Tree *tree);
 bool ts_tree_eq(const Tree *tree1, const Tree *tree2);
 int ts_tree_compare(const Tree *tree1, const Tree *tree2);
 
