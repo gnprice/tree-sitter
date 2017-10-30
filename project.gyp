@@ -1,4 +1,8 @@
 {
+  'variables': {
+    'library': 'shared_library',
+  },
+
   'targets': [
     {
       'target_name': 'compiler',
@@ -81,7 +85,7 @@
 
     {
       'target_name': 'runtime',
-      'type': 'static_library',
+      'type': '<(library)',
       'include_dirs': [
         'include',
         'src',
@@ -101,7 +105,7 @@
         'externals/utf8proc/utf8proc.c',
       ],
       'cflags_c': [
-        '-std=c99', '-U_FORTIFY_SOURCE', '-D_FORTIFY_SOURCE=1'
+        '-std=c99', '-U_FORTIFY_SOURCE', '-D_FORTIFY_SOURCE=1', '-fPIC',
       ],
       'ldflags': [
         '-g',
